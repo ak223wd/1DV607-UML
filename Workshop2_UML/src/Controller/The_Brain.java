@@ -9,7 +9,9 @@ public class The_Brain {
         Member mdr = new Member(name, personalNumber);
 
         //CREATE an ID
-        
+        long ID = System.currentTimeMillis();
+        String nb = Long.toString(ID);
+        nb = nb.substring(7,13);
 
         //ADD new Member info into a document using JSON
 
