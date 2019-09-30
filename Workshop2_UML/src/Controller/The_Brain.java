@@ -19,6 +19,6 @@ public class The_Brain {
     }
 
     public void searchData(){
-        
+
     }
 }
