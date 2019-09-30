@@ -1,19 +1,46 @@
 package Controller;
 import Model.Boat;
 import Model.Member;
+import org.json.JSONObject;
+
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class The_Brain {
 
     public void addMember(String name, String personalNumber){
 
-        Member mdr = new Member(name, personalNumber);
+        Member member = new Member(name, personalNumber);
 
         //CREATE an ID
         long ID = System.currentTimeMillis();
-        String nb = Long.toString(ID);
-        nb = nb.substring(7,13);
+        String nbr = Long.toString(ID);
+        nbr = nbr.substring(7,13);
+
+        member.setID(nbr);
 
         //ADD new Member info into a document using JSON
+
+        JSONObject jso = new JSONObject();
+
+        jso.put("name",member.getMemberName());
+        jso.put("ID", member.getMemberID());
+        jso.put("Personal Number", member.getPersonal_Number());
+
+        try {
+            FileWriter fileWriter = new FileWriter("DataBase.json");
+            fileWriter.write(jso.toString());
+
+            fileWriter.close();
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+
+
 
 
 
