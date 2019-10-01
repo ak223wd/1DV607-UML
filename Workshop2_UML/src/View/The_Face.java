@@ -7,6 +7,8 @@ public class The_Face {
         The_Brain br = new The_Brain();
 
         br.addMember("Anas","11111");
+        br.addMember("Loic","11111");
+
 
 
     }

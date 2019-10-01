@@ -4,9 +4,10 @@ import Model.Member;
 import org.json.JSONObject;
 
 
-
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class The_Brain {
 
@@ -30,8 +31,23 @@ public class The_Brain {
         jso.put("Personal Number", member.getPersonal_Number());
 
         try {
+
+
+            File file = new File("DataBase.json");
+            Scanner sT = new Scanner(file);
+            String text="";
+            while(sT.hasNext()){
+                text += sT.nextLine();
+
+
+            }
+
+            JSONObject tre = new JSONObject(text);
+            System.out.print(tre);
+
             FileWriter fileWriter = new FileWriter("DataBase.json");
             fileWriter.write(jso.toString());
+
 
             fileWriter.close();
 
@@ -39,12 +55,7 @@ public class The_Brain {
             e.printStackTrace();
         }
 
-
-
-
-
-
-
+        
 
     }
 
