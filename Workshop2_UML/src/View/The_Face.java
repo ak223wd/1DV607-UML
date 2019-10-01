@@ -6,8 +6,11 @@ public class The_Face {
 
         The_Brain br = new The_Brain();
 
-        br.addMember("Loic","15551058");
-        br.addMember("Loic","4884152");
+        //br.addMember("Loic","15551058");
+        //br.addMember("Loic","15551058");
+
+        br.addBoat("WESH",1.1,1.1, "15551058");
+
 
 
     }
