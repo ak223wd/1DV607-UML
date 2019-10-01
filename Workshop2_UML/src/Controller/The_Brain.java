@@ -86,43 +86,12 @@ public class The_Brain {
             String check = memberList.getJSONObject(i).getString("Personal Number");
 
             if (check.equals(personalNumber)) {
-
-                if(memberList.getJSONObject(i).getJSONArray("Boat(s)").toString().equals(jsa.toString())){
-                    System.out.print("hi");
-                    JSONArray boatList = new JSONArray();
-                    boatList.put(jsoBoat);
-                    memberList.getJSONObject(i).put("Boat(s)",boatList);
-
-                } else {
-
-                    JSONArray member = memberList.getJSONObject(i).getJSONArray("Boat(s)");
-
-                    boolean isIntheDB = false;
-
-
-                    JSONArray boatList = new JSONArray();
-                    for(int j = 0; j<member.length();j++){
-                        JSONObject js = member.getJSONObject(j);
-                        boatList.put(js);
-                    }
-                    boatList.put(jsoBoat);
-                    memberList.getJSONObject(i).put("Boat(s)",boatList);
-
-                }
-
-
+                JSONArray boats = memberList.getJSONObject(i).getJSONArray("Boat(s)");
+                boats.put(jsoBoat);
+                memberList.getJSONObject(i).put("Boat(s)", boats);
             }
-
-
-            writeToDatabase(memberList);
         }
-
-
-
-
-
-
-
+        writeToDatabase(memberList);
     }
 
 
@@ -145,7 +114,27 @@ public class The_Brain {
 
     }
 
-    public void deleteBoat(){
+    public void deleteBoat(int index, String personalNB){
+        String list = fetchFromDatabase();
+        JSONArray memberList = new JSONArray(list);
+        JSONArray updatedBoats = new JSONArray();
+        for(int i=0;i<memberList.length();i++){
+            if (memberList.getJSONObject(i).getString("Personal Number").equals(personalNB)){
+                JSONArray boats = memberList.getJSONObject(i).getJSONArray("Boat(s)");
+                System.out.println(boats.length());
+                if(boats.length()<index|| index<0){
+                    System.out.print("There is no boat with that number");
+                }else {
+                    for(int j=0;j<boats.length();j++){
+                        if (j!=index){
+                            updatedBoats.put(boats.getJSONObject(j));
+                        }
+                    }
+                }
+                memberList.getJSONObject(i).put("Boat(s)",updatedBoats);
+            }
+        }
+        writeToDatabase(memberList);
 
     }
 
@@ -156,7 +145,6 @@ public class The_Brain {
         for(int i=0;i<memberList.length();i++){
             if (personalNumber.equals(memberList.getJSONObject(i).getString("Personal Number"))){
                 memberList.getJSONObject(i).put("name",name);
-                System.out.print("WHATTTTTTT");
             }
         }
 
@@ -164,18 +152,51 @@ public class The_Brain {
 
     }
 
-    public void updateBoatData(String boatType, double boatLength, double boatWidth){
+    public void updateBoatData(int index, String boatType, double boatLength, double boatWidth, String personalNB){
+        String list = fetchFromDatabase();
+        JSONArray memberList = new JSONArray(list);
+
+        for(int i=0;i<memberList.length();i++){
+            if (memberList.getJSONObject(i).getString("Personal Number").equals(personalNB)){
+                JSONArray boats = memberList.getJSONObject(i).getJSONArray("Boat(s)");
+
+                if(boats.length()<index|| index<0){
+                    System.out.print("There is no boat with that number");
+                }else {
+                    for(int j=0;j<boats.length();j++){
+                        if (j==index){
+                            boats.getJSONObject(j).put("Boat Type",boatType);
+                            boats.getJSONObject(j).put("Boat Length",boatLength);
+                            boats.getJSONObject(j).put("Boat Width",boatWidth);
+                        }
+                    }
+                }
+                memberList.getJSONObject(i).put("Boat(s)",boats);
+            }
+        }
+        writeToDatabase(memberList);
 
     }
 
-    public void searchData(){
+    public String searchData(String personalNB){
+
+        String list = fetchFromDatabase();
+        JSONArray memberList = new JSONArray(list);
+        String memberData="";
+        for (int i=0;i<memberList.length();i++){
+           if(memberList.getJSONObject(i).getString("Personal Number").equals(personalNB)){
+                memberData = memberList.getJSONObject(i).toString();
+           }
+        }
+
+        return memberData;
 
     }
 
 
 
 //READ DATA FROM DATABASE
-    private String fetchFromDatabase() {
+    public String fetchFromDatabase() {
 
         try {
             File file = new File("DataBase.json");
