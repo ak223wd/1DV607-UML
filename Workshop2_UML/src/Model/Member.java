@@ -10,6 +10,12 @@ public class Member {
 
         this.name = name;
         this.personalNumber = personalNumber;
+        //CREATE an ID
+        long ID = System.currentTimeMillis();
+        String nbr = Long.toString(ID);
+        nbr = nbr.substring(7,13);
+
+        setID(nbr);
     }
 
 

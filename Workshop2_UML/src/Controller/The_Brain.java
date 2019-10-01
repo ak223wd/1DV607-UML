@@ -16,13 +16,6 @@ public class The_Brain {
 
         Member member = new Member(name, personalNumber);
 
-        //CREATE an ID
-        long ID = System.currentTimeMillis();
-        String nbr = Long.toString(ID);
-        nbr = nbr.substring(7,13);
-
-        member.setID(nbr);
-
         //ADD new Member info into a document using JSON
 
         JSONObject jso = new JSONObject();
@@ -30,47 +23,30 @@ public class The_Brain {
         jso.put("name",member.getMemberName());
         jso.put("ID", member.getMemberID());
         jso.put("Personal Number", member.getPersonal_Number());
+        jso.put("Boat(s)", JSONObject.NULL);
 
-        try {
-            File file = new File("DataBase.json");
-            Scanner sT = new Scanner(file);
 
-            String text="";
-            while(sT.hasNext()){
-                text += sT.nextLine();
+        String text = fetchFromDatabase();
+
+        if (text.isBlank()){
+            JSONArray fefe = new JSONArray();
+            fefe.put(jso);
+            writeToDatabase(fefe);
+        }else {
+            JSONArray fefe = new JSONArray(text);
+            boolean isinDatabase = false;
+            for (int i = 0; i < fefe.length(); i++) {
+                String check = fefe.getJSONObject(i).getString("Personal Number");
+                if (check.equals(member.getPersonal_Number())) {
+                    System.out.print("Already in the database");
+                    isinDatabase = true;
+                }
             }
-            
-            if (text.isBlank()){
-                JSONArray fefe = new JSONArray();
+            if (isinDatabase == false) {
                 fefe.put(jso);
-                FileWriter fileWriter = new FileWriter("DataBase.json");
-                fileWriter.write(fefe.toString());
-                fileWriter.close();
-
-            }else {
-                JSONArray fefe = new JSONArray(text);
-                boolean isinDatabase = false;
-                for (int i = 0; i < fefe.length(); i++) {
-                    String check = fefe.getJSONObject(i).getString("Personal Number");
-                    if (check.equals(member.getPersonal_Number())) {
-                        System.out.print("Already in the database");
-                        isinDatabase = true;
-                    }
-                }
-                if (isinDatabase == false) {
-                    fefe.put(jso);
-                }
-                FileWriter fileWriter = new FileWriter("DataBase.json");
-                fileWriter.write(fefe.toString());
-                fileWriter.close();
             }
-
-
-        } catch (IOException e){
-            e.printStackTrace();
+            writeToDatabase(fefe);
         }
-
-        
 
     }
 
@@ -80,9 +56,36 @@ public class The_Brain {
     }
 
     //DELETE METHODS
+    public void deleteMember(int personalnb){
 
-    public void deleteMember(int memberID){
 
+    }
+
+    private String fetchFromDatabase() {
+        try {
+            File file = new File("DataBase.json");
+            Scanner sT = new Scanner(file);
+
+            String text = "";
+            while (sT.hasNext()) {
+                text += sT.nextLine();
+            }
+            return text;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+       return null;
+    }
+
+    private void writeToDatabase(JSONArray database){
+        try {
+            FileWriter fileWriter = new FileWriter("DataBase.json");
+            fileWriter.write(database.toString());
+            fileWriter.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void deleteBoat(){
