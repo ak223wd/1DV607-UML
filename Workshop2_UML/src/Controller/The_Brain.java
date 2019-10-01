@@ -2,6 +2,7 @@ package Controller;
 import Model.Boat;
 import Model.Member;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 
 import java.io.File;
@@ -31,25 +32,39 @@ public class The_Brain {
         jso.put("Personal Number", member.getPersonal_Number());
 
         try {
-
-
             File file = new File("DataBase.json");
             Scanner sT = new Scanner(file);
+
             String text="";
             while(sT.hasNext()){
                 text += sT.nextLine();
+            }
+            
+            if (text.isBlank()){
+                JSONArray fefe = new JSONArray();
+                fefe.put(jso);
+                FileWriter fileWriter = new FileWriter("DataBase.json");
+                fileWriter.write(fefe.toString());
+                fileWriter.close();
 
-
+            }else {
+                JSONArray fefe = new JSONArray(text);
+                boolean isinDatabase = false;
+                for (int i = 0; i < fefe.length(); i++) {
+                    String check = fefe.getJSONObject(i).getString("Personal Number");
+                    if (check.equals(member.getPersonal_Number())) {
+                        System.out.print("Already in the database");
+                        isinDatabase = true;
+                    }
+                }
+                if (isinDatabase == false) {
+                    fefe.put(jso);
+                }
+                FileWriter fileWriter = new FileWriter("DataBase.json");
+                fileWriter.write(fefe.toString());
+                fileWriter.close();
             }
 
-            JSONObject tre = new JSONObject(text);
-            System.out.print(tre);
-
-            FileWriter fileWriter = new FileWriter("DataBase.json");
-            fileWriter.write(jso.toString());
-
-
-            fileWriter.close();
 
         } catch (IOException e){
             e.printStackTrace();
