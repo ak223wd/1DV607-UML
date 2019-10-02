@@ -29,18 +29,20 @@ public class The_Face {
         System.out.println("----------------------------------------------------");
 
         System.out.println("Choose from these choices");
-        System.out.println("-------------------------\n");
+        System.out.println("-------------------------");
         System.out.println("1 - Add a Member");
         System.out.println("2 - Delete a Member");
         System.out.println("3 - Update a Member");
-        System.out.println("-------------------------\n");
-        System.out.println("4 - Add a Boat");
-        System.out.println("5 - Delete a Boat");
-        System.out.println("6 - Update a Boat");
+        System.out.println("-------------------------");
+        System.out.println("4 - Member info");
+        System.out.println("-------------------------");
+        System.out.println("5 - Add a Boat");
+        System.out.println("6 - Delete a Boat");
+        System.out.println("7 - Update a Boat");
         System.out.println("-------------------------\n");
         System.out.println("Press \"C\" for Compact List. Or press \"V\" for Verbose List");
         System.out.println("--------------------------------\n");
-        System.out.println("7 - Quit\n");
+        System.out.println("8 - Quit\n");
 
         System.out.println("--------------------------------\n");
 
@@ -49,6 +51,7 @@ public class The_Face {
 
 
         String chooseNum = sc.nextLine();
+
 
         //ADD a MEMBER
         if(chooseNum.equals("1")){
@@ -59,13 +62,17 @@ public class The_Face {
             String personalNumber = sc.nextLine();
             br.addMember(name,personalNumber);
 
+
         } else if (chooseNum.equals("2")){
+
             System.out.println("--- Delete a Member ---");
             System.out.println("Personal Number :");
             String personalNumber = sc.nextLine();
             br.deleteMember(personalNumber);
 
+
         } else if(chooseNum.equals("3")){
+
             System.out.println("--- Update a Member ---");
 
             System.out.println("Personal Number :");
@@ -76,7 +83,19 @@ public class The_Face {
 
             br.updateMemberData(name,personalNumber);
 
+
         } else if(chooseNum.equals("4")){
+
+            System.out.println("--- Member info ---");
+
+            System.out.println("Personal Number :");
+            String personalNumber = sc.nextLine();
+            JSONObject member = new JSONObject(br.searchData(personalNumber));
+
+            System.out.println(member.toString(4));
+
+
+        } else if(chooseNum.equals("5")){
 
             System.out.println("--- Add a Boat ---");
 
@@ -95,7 +114,8 @@ public class The_Face {
 
             br.addBoat(boatType, boatLength, boatWidth, personalNumber);
 
-        } else if(chooseNum.equals("5")){
+
+        } else if(chooseNum.equals("6")){
 
             System.out.println("--- Delete a Boat ---");
 
@@ -106,20 +126,20 @@ public class The_Face {
 
 
             String boatD =  br.searchData(personalNumber);
-            JSONArray arr = new JSONArray(boatD);
+            JSONObject member = new JSONObject(boatD);
+            JSONArray arr = member.getJSONArray("Boat(s)");
+
 
             System.out.println("Here are the available boats : " + arr.toString(4));
 
             System.out.println("Choose a boat, starting from 0 to " + (arr.length()-1));
-            Scanner sC = new Scanner(System.in);
-
-            int index = sC.nextInt();
+            int index = sc.nextInt();
 
             br.deleteBoat(index, personalNumber);
 
-            sC.close();
 
-        } else if(chooseNum.equals("6")){
+        } else if(chooseNum.equals("7")){
+
             System.out.println("--- Update a Boat ---");
 
             System.out.println("Personal Number :");
@@ -127,22 +147,21 @@ public class The_Face {
 
 
             String boatD =  br.searchData(personalNumber);
-            JSONArray arr = new JSONArray(boatD);
+            JSONObject member = new JSONObject(boatD);
+            JSONArray arr = member.getJSONArray("Boat(s)");
 
             System.out.println("Here are the available boats : " + arr.toString(4));
 
             System.out.println("Choose a boat, starting from 0 to " + (arr.length()-1));
-            Scanner sC = new Scanner(System.in);
+            int index = sc.nextInt();
 
-            int index = sC.nextInt();
+            System.out.println("Boat Type: ");
+            String boatType = sc.next();
 
-            System.out.println("Boat Type : ");
-            String boatType = sc.nextLine();
-
-            System.out.println("Boat Length : ");
+            System.out.println("Boat Length: ");
             double boatLength = sc.nextDouble();
 
-            System.out.println("Boat Width :");
+            System.out.println("Boat Width: ");
             double boatWidth = sc.nextDouble();
 
 
@@ -215,9 +234,10 @@ public class The_Face {
 
 
 
-        } else if (chooseNum.equals("7")){
+        } else if (chooseNum.equals("8")){
             System.exit(0);
         }
+
     }
 
 }
