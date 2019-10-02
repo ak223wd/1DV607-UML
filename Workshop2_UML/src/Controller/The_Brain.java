@@ -33,7 +33,7 @@ public class The_Brain {
 
         String text = fetchFromDatabase(); //Call of the method "fetchFromDatabase" and return a string of an JSON Array
 
-        if (text.isBlank()){
+        if (text.isEmpty()){
             /*
             If the String "text" is empty then creates a new JSON Array and add the JSON Object(Member).
             */
@@ -233,12 +233,12 @@ public class The_Brain {
             Checks if the given personal number is included into the database.
             If it is, then goes into the if statement. Otherwise will go to the else statement.
              */
-           if(memberList.getJSONObject(i).getString("Personal Number").equals(personalNB)){
-               //Gets the String of the JSONObject of the specific member
+            if(memberList.getJSONObject(i).getString("Personal Number").equals(personalNB)){
+                //Gets the String of the JSONObject of the specific member
                 memberData = memberList.getJSONObject(i).toString();
-           }else{
-               System.out.println("Personal number was not found in the database");
-           }
+            }else{
+                System.out.println("Personal number was not found in the database");
+            }
         }
 
         return memberData; //Returns the String to where it was called
@@ -247,12 +247,12 @@ public class The_Brain {
 
 
 
-//READ DATA FROM DATABASE
+    //READ DATA FROM DATABASE
     public String fetchFromDatabase() {
 
         try {
             //Get the file of the Database
-            File file = new File("src/DataBase.json");
+            File file = new File("../DataBase.json");
             //Scanner to be able to read the file
             Scanner sT = new Scanner(file);
 
@@ -264,18 +264,26 @@ public class The_Brain {
             return text; //Return the string of the database.
 
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
         return null;
     }
 
+    public void createDatabase(){
+        try{
+            FileWriter fileWriter = new FileWriter("../DataBase.json");//Select the name of the file and the location
+            fileWriter.write("[]"); //Writes the file with the database
+            fileWriter.close();//Close the FileWriter
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
-
-//WRITE DATA TO DATABASE
+    //WRITE DATA TO DATABASE
     private void writeToDatabase(JSONArray database){
         try {
             //Creates a FileWriter to be able to write on a file.
-            FileWriter fileWriter = new FileWriter("src/DataBase.json");//Select the name of the file and the location
+            FileWriter fileWriter = new FileWriter("../DataBase.json");//Select the name of the file and the location
             fileWriter.write(database.toString()); //Writes the file with the database
             fileWriter.close();//Close the FileWriter
         }catch (IOException e){

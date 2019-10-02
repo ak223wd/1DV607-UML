@@ -4,15 +4,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 
 public class The_Face {
     public static void main (String[] args) {
-
+        The_Brain br = new The_Brain();
+        br.createDatabase();
         boolean bool = true;
         while (bool){
             menu();
@@ -23,6 +21,7 @@ public class The_Face {
 
     public static void menu(){
         The_Brain br = new The_Brain();
+
         Scanner sc = new Scanner(System.in);
         System.out.println("\n--------------------------------------------------");
         System.out.println("-----------------------MENU-------------------------");
@@ -206,7 +205,7 @@ public class The_Face {
 
             try {
 
-                File file = new File("DataBase.json");
+                File file = new File("../DataBase.json");
                 Scanner sT = new Scanner(file);
                 String text="";
 
