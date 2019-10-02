@@ -1,11 +1,14 @@
 package Model;
 
 public class Boat {
-
+    //********************************************//
+    //*********THIS CLASS IS FOR THE BOAT*********//
+    //********************************************//
     private String boatType;
     private double boatLength;
     private double boatWidth;
 
+    //Boat's Constructor
     public Boat(String boatType, double boatWidth, double boatLength ) {
 
         this.boatType = boatType;
