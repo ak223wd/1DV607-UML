@@ -10,14 +10,12 @@ import java.util.Scanner;
 public class The_Face {
     public static void main (String[] args) {
         The_Brain br = new The_Brain();
-        br.createDatabase();
         boolean bool = true;
         while (bool){
             menu();
 
         }
     }
-
 
     public static void menu(){
         The_Brain br = new The_Brain();

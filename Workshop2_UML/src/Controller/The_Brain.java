@@ -269,16 +269,6 @@ public class The_Brain {
         return null;
     }
 
-    public void createDatabase(){
-        try{
-            FileWriter fileWriter = new FileWriter("../DataBase.json");//Select the name of the file and the location
-            fileWriter.write("[]"); //Writes the file with the database
-            fileWriter.close();//Close the FileWriter
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
     //WRITE DATA TO DATABASE
     private void writeToDatabase(JSONArray database){
         try {
