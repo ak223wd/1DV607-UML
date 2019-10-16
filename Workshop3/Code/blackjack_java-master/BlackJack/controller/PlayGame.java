@@ -2,35 +2,82 @@ package BlackJack.controller;
 
 import BlackJack.view.IView;
 import BlackJack.model.Game;
+import BlackJack.model.DealerObs;
 
-public class PlayGame {
+public class PlayGame implements CheckCommand, DealerObs {
 
-  public boolean Play(Game a_game, IView a_view) {
-    a_view.DisplayWelcomeMessage();
-    
-    a_view.DisplayDealerHand(a_game.GetDealerHand(), a_game.GetDealerScore());
-    a_view.DisplayPlayerHand(a_game.GetPlayerHand(), a_game.GetPlayerScore());
+  private Game aGame;
+  private IView iview;
 
-    if (a_game.IsGameOver())
-    {
-        a_view.DisplayGameOver(a_game.IsDealerWinner());
+  public PlayGame(Game a_game, IView a_view){
+    iview = a_view;
+    a_view.addCommand(this);
+    aGame = a_game;
+    a_game.addCommand(this);
+  }
+
+
+  public void Play() {
+    iview.DisplayWelcomeMessage();
+    showPlayerHand();
+
+
+}
+
+
+private void showPlayerHand(){
+  iview.DisplayDealerHand(aGame.GetDealerHand(), aGame.GetDealerScore());
+  iview.DisplayPlayerHand(aGame.GetPlayerHand(), aGame.GetPlayerScore());
+
+}
+
+private void isEndGame(){
+  if (aGame.IsGameOver())
+  {
+    iview.DisplayGameOver(aGame.IsDealerWinner());
+  }
+}
+
+  //WHEN EACH COMMAND IS PRESSED
+  @Override
+  public void newGameCommand() {
+    aGame.NewGame();
+    showPlayerHand();
+
+  }
+
+  @Override
+  public void hitCommand() {
+    aGame.Hit();
+    isEndGame();
+
+  }
+
+  @Override
+  public void standCommand() {
+    aGame.Stand();
+    showPlayerHand();
+    isEndGame();
+
+  }
+
+  @Override
+  public void quitCommand() {
+    System.exit(0);
+
+  }
+
+  @Override
+  public void NotifyNewCardDealt() {
+    try {
+      iview.DisplayDealerStatus();    // Display Dealer status
+      Thread.sleep(2000);     //Delay
+      iview.DisplayDealerHand(aGame.GetDealerHand(), aGame.GetDealerScore());
+      iview.DisplayPlayerHand(aGame.GetPlayerHand(), aGame.GetPlayerScore());
+    }
+    catch ( InterruptedException e ) {
+      e.printStackTrace();
     }
 
-    int input = a_view.GetInput();
-    
-    if (input == 'p')
-    {
-        a_game.NewGame();
-    }
-    else if (input == 'h')
-    {
-        a_game.Hit();
-    }
-    else if (input == 's')
-    {
-        a_game.Stand();
-    }
-
-    return input != 'q';
   }
 }

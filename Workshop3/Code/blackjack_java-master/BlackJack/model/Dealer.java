@@ -2,11 +2,15 @@ package BlackJack.model;
 
 import BlackJack.model.rules.*;
 
+import java.util.List;
+
 public class Dealer extends Player {
 
   private Deck m_deck;
   private INewGameStrategy m_newGameRule;
   private IHitStrategy m_hitRule;
+
+  private List<DealerObs> subscribers ;
 
   public Dealer(RulesFactory a_rulesFactory) {
   
@@ -79,5 +83,7 @@ public class Dealer extends Player {
     }
     return false;
   }
+
+  public void addSubscriber(DealerObs subscriber){subscribers.add(subscriber); }
   
 }

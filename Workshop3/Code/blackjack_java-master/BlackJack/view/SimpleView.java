@@ -1,28 +1,66 @@
 package BlackJack.view;
 
+import BlackJack.controller.CheckCommand;
+import BlackJack.controller.PlayGame;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class SimpleView implements IView 
 {
+    private List<CheckCommand> cKC;
 
-  public void DisplayWelcomeMessage()
-        {
-          for(int i = 0; i < 50; i++) {System.out.print("\n");}; 
+    public SimpleView (){
+        cKC = new ArrayList<CheckCommand>();
+    }
+
+  public void DisplayWelcomeMessage() {
+          for(int i = 0; i < 50; i++) {System.out.print("\n");}
           System.out.println("Hello Black Jack World");
-          System.out.println("Type 'p' to Play, 'h' to Hit, 's' to Stand or 'q' to Quit\n");
+
+          GetInput();
         }
 
         public int GetInput()
         {
+            System.out.println("Type 'p' to Play, 'h' to Hit, 's' to Stand or 'q' to Quit\n");
           try {
             int c = System.in.read();
             while (c == '\r' || c =='\n') {
               c = System.in.read();
             }
-            return c;
+              if (c == 'p')
+              {
+                  for(CheckCommand csk:cKC ){
+                      csk.newGameCommand();
+                  }
+              }
+              else if (c == 'h')
+              {
+                  for(CheckCommand csk:cKC ){
+                      csk.hitCommand();
+                  }
+              }
+              else if (c == 's')
+              {
+                  for(CheckCommand csk:cKC ){
+                      csk.standCommand();
+                  }
+              } else if(c=='q'){
+                  for(CheckCommand csk:cKC ){
+                      csk.quitCommand();
+                  }
+              }
+              GetInput();
+
           } catch (java.io.IOException e) {
             System.out.println("" + e);
-            return 0;
+
           }
+            return 0;
         }
+
+
 
         public void DisplayCard(BlackJack.model.Card a_card)
         {
@@ -63,4 +101,17 @@ public class SimpleView implements IView
             }
             
         }
+
+    @Override
+    public void DisplayDealerStatus() {
+        for ( int i = 0 ; i<1 ; i++ ){
+            System.out.print("\n") ;
+        }
+        System.out.println("getting a card...\n");
     }
+
+    @Override
+    public void addCommand(CheckCommand cKC) {
+        this.cKC.add(cKC);
+    }
+}

@@ -1,6 +1,8 @@
 package BlackJack.view;
 
-public class SwedishView implements IView 
+import BlackJack.controller.CheckCommand;
+
+public class SwedishView implements IView
     {
         public void DisplayWelcomeMessage()
         {
@@ -60,6 +62,16 @@ public class SwedishView implements IView
             {
                 System.out.println("Du vann!");
             }
+        }
+
+        @Override
+        public void addCommand(CheckCommand cKC) {
+
+        }
+
+        @Override
+        public void DisplayDealerStatus() {
+
         }
 
         private void DisplayHand(String a_name, Iterable<BlackJack.model.Card> a_hand, int a_score)
