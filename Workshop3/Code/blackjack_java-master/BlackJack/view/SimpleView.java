@@ -9,10 +9,14 @@ import java.util.List;
 public class SimpleView implements IView 
 {
     private List<CheckCommand> cKC;
+    private PlayGame game;
 
     public SimpleView (){
         cKC = new ArrayList<CheckCommand>();
+        //game = new PlayGame(this);
+
     }
+
 
   public void DisplayWelcomeMessage() {
           for(int i = 0; i < 50; i++) {System.out.print("\n");}

@@ -64,12 +64,12 @@ public class SwedishView implements IView
             }
         }
 
-        @Override
+
         public void addCommand(CheckCommand cKC) {
 
         }
 
-        @Override
+
         public void DisplayDealerStatus() {
 
         }
