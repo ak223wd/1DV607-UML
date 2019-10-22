@@ -57,10 +57,6 @@ public class Game {
   {
     return m_player.CalcScore();
   }
-
-  public void addCommand(DealerObs subscriber){
-    m_dealer.addSubscriber(subscriber);
-  }
     
   
 }

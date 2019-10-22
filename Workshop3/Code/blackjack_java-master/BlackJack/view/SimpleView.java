@@ -101,17 +101,4 @@ public class SimpleView implements IView
             }
             
         }
-
-    @Override
-    public void DisplayDealerStatus() {
-        for ( int i = 0 ; i<1 ; i++ ){
-            System.out.print("\n") ;
-        }
-        System.out.println("getting a card...\n");
     }
-
-    @Override
-    public void addCommand(CheckCommand cKC) {
-        this.cKC.add(cKC);
-    }
-}
