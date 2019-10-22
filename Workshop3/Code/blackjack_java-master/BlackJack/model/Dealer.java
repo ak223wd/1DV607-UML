@@ -7,12 +7,14 @@ public class Dealer extends Player {
   private Deck m_deck;
   private INewGameStrategy m_newGameRule;
   private IHitStrategy m_hitRule;
+  private IWhoWinsOnEqualScore m_whoWins;
 
   public Dealer(RulesFactory a_rulesFactory) {
   
     m_newGameRule = a_rulesFactory.GetNewGameRule();
    //m_hitRule = a_rulesFactory.GetHitRule();
     m_hitRule = a_rulesFactory.GetSoft17Rule();
+    m_whoWins = a_rulesFactory.GetDealerWinsOnEqualScore();
     
     /*for(Card c : m_deck.GetCards()) {
       c.Show(true);
@@ -33,10 +35,8 @@ public class Dealer extends Player {
 
   public boolean Hit(Player a_player) {
     if (m_deck != null && a_player.CalcScore() < g_maxScore && !IsGameOver()) {
-      Card c;
-      c = m_deck.GetCard();
-      c.Show(true);
-      a_player.DealCard(c);
+
+      a_player.DealCard(m_deck.GetCard(),true);
       
       return true;
     }
@@ -44,12 +44,7 @@ public class Dealer extends Player {
   }
 
   public boolean IsDealerWinner(Player a_player) {
-    if (a_player.CalcScore() > g_maxScore) {
-      return true;
-    } else if (CalcScore() > g_maxScore) {
-      return false;
-    }
-    return CalcScore() >= a_player.CalcScore();
+    return m_whoWins.IsDealerWinner(a_player,this,g_maxScore);
   }
 
   public boolean IsGameOver() {
@@ -64,19 +59,13 @@ public class Dealer extends Player {
       ShowHand();
       Iterable<Card> gC = GetHand();
       for (Card c:gC) {
-
-        c = m_deck.GetCard();
         c.Show(true);
-        DealCard(c);
-        return true;
       }
 
       while(m_hitRule.DoHit(this)){
-        Card c = m_deck.GetCard();
-        c.Show(true);
-        DealCard(c);
+        DealCard(m_deck.GetCard(),true);
       }
-
+      return true;
     }
     return false;
   }

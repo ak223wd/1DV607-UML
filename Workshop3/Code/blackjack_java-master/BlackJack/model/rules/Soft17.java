@@ -11,15 +11,15 @@ public class Soft17 implements IHitStrategy {
         if (a_dealer.CalcScore() < g_hitLimit) {
             return true;
         } else if (a_dealer.CalcScore() == g_hitLimit) {
-            boolean hasAce = false;
+            boolean isThereAnyAce = false;
 
-            for (Card c : a_dealer.GetHand()) {
-                if (c.GetValue() == Card.Value.Ace) {
-                    hasAce = true;
+            for (Card card : a_dealer.GetHand()) {
+                if (card.GetValue() == Card.Value.Ace) {
+                    isThereAnyAce = true;
                 }
             }
 
-            if (hasAce) {
+            if (isThereAnyAce) {
                 return true;
             }
         }
