@@ -1,5 +1,7 @@
 package BlackJack.model;
 
+import BlackJack.model.rules.IObserverGame;
+
 public class Game {
 
   private Dealer m_dealer;
@@ -56,6 +58,11 @@ public class Game {
   public int GetPlayerScore()
   {
     return m_player.CalcScore();
+  }
+
+  public void addGameObserver(IObserverGame observerGame){
+    m_dealer.addGameObserver(observerGame); //Because GameObservable is the super class and Player is extending it and then Dealer is extends Player.
+    m_player.addGameObserver(observerGame);// Therefore both Player and Dealer have access to the method addGameObserver of the abstract class "GameObservable"
   }
     
   
