@@ -6,14 +6,21 @@ public class SimpleView implements IView
     public void DisplayWelcomeMessage()
     {
         for(int i = 0; i < 50; i++) {System.out.print("\n");}
-        System.out.println(" ======================================");
-        System.out.println("|   **********             **********  |");
-        System.out.println("|              ***********             |");
-        System.out.println("| ''***** Welcome to BLACKJACK ******* |");
-        System.out.println("|              ***********             |");
-        System.out.println("|   **********             **********  |");
-        System.out.println(" ======================================");
-       // System.out.println("Hello Black Jack World");
+        System.out.println(" ==============================");
+        System.out.println("| 10                           |");
+        System.out.println("| ♠                            |");
+        System.out.println("|              *               |");
+        System.out.println("|            *   *             |");
+        System.out.println("|          *       *           |");
+        System.out.println("|          * *   * *           |");
+        System.out.println("|     Welcome to BLACKJACK     |");
+        System.out.println("|              **              |");
+        System.out.println("|             ****             |");
+        System.out.println("|                              |");
+        System.out.println("|                            ♠ |");
+        System.out.println("|                            10|");
+        System.out.println(" ==============================");
+
         System.out.println("Type 'p' to Play, 'h' to Hit, 's' to Stand or 'q' to Quit\n");
     }
 
